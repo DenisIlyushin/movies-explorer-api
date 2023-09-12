@@ -11,7 +11,7 @@ const { JWT_SECRET = 'b1gSecret' } = process.env;
 
 module.exports.signUp = (req, res, next) => {
   const {
-    email, name, about, avatar, password,
+    email, name, password,
   } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => User.create({

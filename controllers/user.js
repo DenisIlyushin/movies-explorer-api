@@ -3,7 +3,7 @@ const {
 } = require('http-status-codes');
 
 const User = require('../models/user');
-const {handleRequestErrors} = require('../errors/handleRequestErrors');
+const { handleRequestErrors } = require('../errors/handleRequestErrors');
 
 module.exports.getCurrentUser = (req, res, next) => {
   const userId = req.user._id;
@@ -33,13 +33,14 @@ module.exports.updateUser = (req, res, next) => {
     userId,
     {
       name: req.body.name,
-      email: req.body.email
+      email: req.body.email,
     },
     {
       new: true,
       runValidators: true,
       upsert: false,
-    })
+    },
+  )
     .orFail()
     .then((user) => {
       res

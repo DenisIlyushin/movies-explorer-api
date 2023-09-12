@@ -1,7 +1,7 @@
 const { celebrate, Joi } = require('celebrate');
 const userRouter = require('express').Router();
 
-const auth = require('../middleware/auth.js');
+const auth = require('../middleware/auth');
 const {
   getCurrentUser,
   updateUser,

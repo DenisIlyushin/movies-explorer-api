@@ -1,8 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 
-const { handleRequestErrors } = require('../errors/handleRequestErrors.js');
+const { handleRequestErrors } = require('../errors/handleRequestErrors');
 const Movie = require('../models/movie');
-const ForbiddenError = require('../errors/classes/forbiddenError.js');
+const ForbiddenError = require('../errors/classes/forbiddenError');
 
 module.exports.createMovie = (req, res, next) => {
   Movie.create({
