@@ -33,9 +33,9 @@ app.use('/', router);
 
 app.use(errorLogger);
 app.use(errors());
-// eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
   returnErrorAsResponse(error, res, {});
+  next()
 });
 
 app.listen(PORT, () => {
