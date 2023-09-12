@@ -1,7 +1,10 @@
+require('dotenv').config();
+
 const {
-  NODE_ENV = 'dev',
-  FRONT_URL = 'ilyushindenis-15-front.nomoredomainsicu.ru',
+  NODE_ENV,
+  FRONT_URL = 'denisilyushin.nomoredomainsicu.ru',
 } = process.env;
+
 const allowedCors = [
   `http://${FRONT_URL}`,
   `https://${FRONT_URL}`,

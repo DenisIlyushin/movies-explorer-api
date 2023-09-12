@@ -35,3 +35,4 @@ yarn-error.log*
 /.junk
 /reminder.txt
 /.env
+/reminder.md

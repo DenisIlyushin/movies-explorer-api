@@ -29,7 +29,7 @@ app.use(helmet());
 app.use(rateLimiter);
 app.use(requestLogger);
 
-app.use('/', router);
+app.use('/api', router);
 
 app.use(errorLogger);
 app.use(errors());
