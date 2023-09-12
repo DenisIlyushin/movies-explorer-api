@@ -6,8 +6,8 @@ const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const cors = require('./middleware/cors');
 const rateLimiter = require('./middleware/rateLimiter');
-const router = require('./routes/index');
 
+const router = require('./routes/index');
 const { returnErrorAsResponse } = require('./errors/returnErrorAsResponse');
 
 const {
@@ -35,7 +35,7 @@ app.use(errorLogger);
 app.use(errors());
 app.use((error, req, res, next) => {
   returnErrorAsResponse(error, res, {});
-  next()
+  next();
 });
 
 app.listen(PORT, () => {
