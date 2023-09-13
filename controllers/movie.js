@@ -26,7 +26,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.getAllMovies = (req, res, next) => {
-  Movie.find({}, null, { sort: { createdAt: -1 } })
+  Movie.find({ owner: req.user._id }, null, { sort: { createdAt: -1 } })
     .then((movies) => {
       res.status(StatusCodes.OK).send(movies);
     })
@@ -37,7 +37,7 @@ module.exports.getAllMovies = (req, res, next) => {
 
 module.exports.deleteMovie = (req, res, next) => {
   const movieId = req.params.id;
-
+  console.log(movieId)
   Movie.findById(movieId)
     .orFail()
     .then((movie) => {
@@ -58,8 +58,8 @@ module.exports.deleteMovie = (req, res, next) => {
         error,
         next,
         {
-          notFoundMessage: `Фильм с ID ${movieId} не найдена`,
-          badRequestMessage: `Фильм с с ID ${movieId} не валиднa`,
+          notFoundMessage: `Фильм с ID ${movieId} не найден`,
+          badRequestMessage: `Фильм с с ID ${movieId} не валиден`,
         },
       );
     });

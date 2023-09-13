@@ -17,6 +17,7 @@ const {
   NODE_ENV,
 } = require('./appConfig');
 
+
 mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
 });
@@ -35,7 +36,7 @@ app.use(errorLogger);
 app.use(errors());
 app.use((error, req, res, next) => {
   returnErrorAsResponse(error, res, {});
-  next();
+  // next();
 });
 
 app.listen(PORT, () => {
