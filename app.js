@@ -36,7 +36,7 @@ app.use(errorLogger);
 app.use(errors());
 app.use((error, req, res, next) => {
   returnErrorAsResponse(error, res, {});
-  // next();
+  next();
 });
 
 app.listen(PORT, () => {
