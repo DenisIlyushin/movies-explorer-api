@@ -37,7 +37,6 @@ module.exports.getAllMovies = (req, res, next) => {
 
 module.exports.deleteMovie = (req, res, next) => {
   const movieId = req.params.id;
-  console.log(movieId)
   Movie.findById(movieId)
     .orFail()
     .then((movie) => {

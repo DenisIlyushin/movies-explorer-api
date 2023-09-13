@@ -17,7 +17,6 @@ const {
   NODE_ENV,
 } = require('./appConfig');
 
-
 mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
 });
