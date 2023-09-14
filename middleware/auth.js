@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 
 const UnauthorizedError = require('../errors/classes/unauthorizedError');
+const { authMessages } = require('../errors/messages/middlewaresMessages');
 
 const {
   JWT_SECRET = 'b1gSecret',
 } = process.env;
 
-// eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
   let payload;
   const { authorization } = req.headers;
@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
   if (!authorization || !authorization.startsWith('Bearer')) {
     return next(
       new UnauthorizedError(
-        'Вы не авторизованы для данного запроса - нет токена доступа',
+        authMessages.noToken,
       ),
     );
   }
@@ -24,10 +24,10 @@ module.exports = (req, res, next) => {
   } catch (err) {
     return next(
       new UnauthorizedError(
-        'Вы не авторизованы для данного запроса - токен не валиден или устарел',
+        authMessages.badToken,
       ),
     );
   }
   req.user = payload;
-  next();
+  return next();
 };

@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const { handleRequestErrors } = require('../errors/handleRequestErrors');
 const Movie = require('../models/movie');
 const ForbiddenError = require('../errors/classes/forbiddenError');
+const { movieMessages } = require('../errors/messages/controllersMessages');
 
 module.exports.createMovie = (req, res, next) => {
   Movie.create({
@@ -19,7 +20,7 @@ module.exports.createMovie = (req, res, next) => {
         error,
         next,
         {
-          invalidRequestMessage: 'Не удалось создать карточку места',
+          invalidRequestMessage: movieMessages.failedToCreateMovie,
         },
       );
     });
@@ -36,13 +37,12 @@ module.exports.getAllMovies = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  const movieId = req.params.id;
-  Movie.findById(movieId)
+  Movie.findById(req.params.id)
     .orFail()
     .then((movie) => {
       if (req.user._id !== movie.owner.toString()) {
         return Promise.reject(
-          new ForbiddenError('Нельзя удалять чужие фильмы'),
+          new ForbiddenError(movieMessages.forbiddenToDelete),
         );
       }
       return Movie.findByIdAndRemove(movie._id)
@@ -57,8 +57,8 @@ module.exports.deleteMovie = (req, res, next) => {
         error,
         next,
         {
-          notFoundMessage: `Фильм с ID ${movieId} не найден`,
-          badRequestMessage: `Фильм с с ID ${movieId} не валиден`,
+          notFoundMessage: movieMessages.noMovieFound,
+          badRequestMessage: movieMessages.invalidMovieId,
         },
       );
     });

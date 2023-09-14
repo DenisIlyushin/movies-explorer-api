@@ -1,16 +1,13 @@
-const { celebrate, Joi } = require('celebrate');
 const authRouter = require('express').Router();
 
 const {
   signUp,
   signIn,
 } = require('../controllers/auth');
-
 const {
-  validateEmail,
-  validateRequiredString,
-  validateShortString,
-} = require('../utils/validators');
+  signupValidator,
+  signinValidator,
+} = require('../utils/routesValidators');
 
 const {
   AUTH_PATH = '',
@@ -18,23 +15,12 @@ const {
 
 authRouter.post(
   `${AUTH_PATH}/signup`,
-  celebrate({
-    body: Joi.object().keys({
-      email: validateEmail(),
-      password: validateRequiredString(),
-      name: validateShortString(),
-    }),
-  }),
+  signupValidator,
   signUp,
 );
 authRouter.post(
   `${AUTH_PATH}/signin`,
-  celebrate({
-    body: Joi.object().keys({
-      email: validateEmail(),
-      password: validateRequiredString(),
-    }),
-  }),
+  signinValidator,
   signIn,
 );
 

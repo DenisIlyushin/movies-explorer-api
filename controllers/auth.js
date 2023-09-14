@@ -6,6 +6,7 @@ const {
 
 const User = require('../models/user');
 const { handleRequestErrors } = require('../errors/handleRequestErrors');
+const { authMessages } = require('../errors/messages/controllersMessages');
 
 const { JWT_SECRET = 'b1gSecret' } = process.env;
 
@@ -33,8 +34,8 @@ module.exports.signUp = (req, res, next) => {
         error,
         next,
         {
-          invalidRequestMessage: 'Не удалось создать пользователя.',
-          conflictMessage: 'Пользователь с таким email уже зарегистрирован',
+          invalidRequestMessage: authMessages.failedToCreateUser,
+          conflictMessage: authMessages.userExists,
         },
       );
     });
@@ -56,7 +57,7 @@ module.exports.signIn = (req, res, next) => {
         error,
         next,
         {
-          unauthorizedMessage: 'Невозможно предоставить токен для пользователя',
+          unauthorizedMessage: authMessages.unauthorizedUser,
         },
       );
     });

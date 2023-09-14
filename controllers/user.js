@@ -4,10 +4,10 @@ const {
 
 const User = require('../models/user');
 const { handleRequestErrors } = require('../errors/handleRequestErrors');
+const { userMessages } = require('../errors/messages/controllersMessages');
 
 module.exports.getCurrentUser = (req, res, next) => {
-  const userId = req.user._id;
-  User.findById(userId)
+  User.findById(req.user._id)
     .orFail()
     .then((user) => {
       res
@@ -19,26 +19,22 @@ module.exports.getCurrentUser = (req, res, next) => {
         error,
         next,
         {
-          notFoundMessage: `Пользователь с ID ${userId} не найден`,
-          badRequestMessage: `Пользователь с ID ${userId} не валиден`,
+          notFoundMessage: userMessages.noUserFound,
+          badRequestMessage: userMessages.invalidUserId,
         },
       );
     });
 };
 
 module.exports.updateUser = (req, res, next) => {
-  const userId = req.user._id;
+  const { email, name } = req.body;
 
   User.findByIdAndUpdate(
-    userId,
-    {
-      name: req.body.name,
-      email: req.body.email,
-    },
+    req.user._id,
+    { email, name },
     {
       new: true,
       runValidators: true,
-      upsert: false,
     },
   )
     .orFail()
@@ -52,8 +48,8 @@ module.exports.updateUser = (req, res, next) => {
         error,
         next,
         {
-          notFoundMessage: `Пользователь с ID ${userId} не найден`,
-          badRequestMessage: `Пользователь с ID ${userId} не валиден`,
+          notFoundMessage: userMessages.noUserFound,
+          badRequestMessage: userMessages.invalidUserId,
         },
       );
     });

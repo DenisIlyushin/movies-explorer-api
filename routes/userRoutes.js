@@ -1,4 +1,3 @@
-const { celebrate, Joi } = require('celebrate');
 const userRouter = require('express').Router();
 
 const auth = require('../middleware/auth');
@@ -6,9 +5,7 @@ const {
   getCurrentUser,
   updateUser,
 } = require('../controllers/user');
-const {
-  validateShortString,
-} = require('../utils/validators');
+const { editCurrentUserValidator } = require('../utils/routesValidators');
 
 const {
   USER_PATH = '/users',
@@ -22,12 +19,7 @@ userRouter.get(
 userRouter.patch(
   `${USER_PATH}/me`,
   auth,
-  celebrate({
-    body: Joi.object().keys({
-      name: validateShortString(),
-      about: validateShortString(),
-    }),
-  }),
+  editCurrentUserValidator,
   updateUser,
 );
 
