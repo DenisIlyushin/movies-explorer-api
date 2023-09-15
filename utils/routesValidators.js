@@ -2,7 +2,6 @@ const { celebrate, Joi } = require('celebrate');
 const {
   validateEmail,
   validateRequiredString,
-  validateShortString,
   validateRequiredShortString,
   validateRequiredNumber,
   validateRequiredUrl,
@@ -13,7 +12,7 @@ module.exports.signupValidator = celebrate({
   body: Joi.object().keys({
     email: validateEmail(),
     password: validateRequiredString(),
-    name: validateShortString(),
+    name: validateRequiredShortString(),
   }),
 });
 
